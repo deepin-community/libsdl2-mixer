@@ -1,0 +1,183 @@
+libsdl2-mixer (2.0.4+dfsg1-4) UNRELEASED; urgency=medium
+
+  * update
+
+ -- Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>  Thu, 19 May 2022 10:25:21 +0800
+
+libsdl2-mixer (2.0.4+dfsg1-4) unstable; urgency=medium
+
+  * Team upload
+  * Fix FTBFS with autoconf 2.71 (Closes: #993157)
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 06 Sep 2021 10:15:13 +0100
+
+libsdl2-mixer (2.0.4+dfsg1-3) unstable; urgency=medium
+
+  * Team upload.
+
+  [ Simon McVittie ]
+  * Add a superficial autopkgtest for libsdl2-mixer-dev (Closes: #941428)
+  * d/rules: Don't explicitly use --as-needed linker option.
+    It's the default with bullseye toolchains.
+
+  [ Felix Geyer ]
+  * Switch to debhelper compat level v12
+
+  [ Debian Janitor ]
+  * Use secure copyright file specification URI.
+  * debian/copyright: use spaces rather than tabs to start continuation
+    lines.
+  * Rely on pre-initialized dpkg-architecture variables.
+
+  [ Fabian Greffrath ]
+  * Backport a patch from upstream that fixes a use-after-free in
+    music_fluidsynth.c, which would cause a segmentation fault with
+    libfluidsynth 2.1.6 whenever a song was stopped.
+
+ -- Fabian Greffrath <fabian@debian.org>  Fri, 22 Jan 2021 10:59:38 +0100
+
+libsdl2-mixer (2.0.4+dfsg1-2) unstable; urgency=medium
+
+  * Team upload.
+  * Recommend a recent enough timgm6mb-soundfont package or an
+    alternative provider of sf3-soundfont-gm and use the default
+    soundfont throughout the package.
+
+ -- Fabian Greffrath <fabian@debian.org>  Sun, 04 Aug 2019 13:48:23 +0200
+
+libsdl2-mixer (2.0.4+dfsg1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version.
+  * Verify signature of upstream tarball.
+  * Switch from libmad to libmpg123 to avoid potential GPL licensing issues
+    of libsdl2-mixer users.
+  * Enable support for the Opus codec.
+
+ -- Felix Geyer <fgeyer@debian.org>  Sun, 03 Feb 2019 12:40:50 +0100
+
+libsdl2-mixer (2.0.2+dfsg1-3) unstable; urgency=medium
+
+  * Bump Policy Standards-Version to 4.2.1 (no changes needed)
+  * Switch to debhelper compat level v11
+  * d/watch:
+    - Set to version=4
+    - Use https for URL
+  * d/control:
+    - Use https for Homepage URL
+    - Set "Rules-Requires-Root: no"
+    - Update Vcs-* URLs
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Fri, 19 Oct 2018 23:47:51 +0200
+
+libsdl2-mixer (2.0.2+dfsg1-2) unstable; urgency=medium
+
+  * Team upload.
+  * Fix the shlib symlink again, thanks again Andreas Beckmann
+    (Closes: #877270).
+
+ -- Fabian Greffrath <fabian@debian.org>  Thu, 09 Nov 2017 17:19:39 +0100
+
+libsdl2-mixer (2.0.2+dfsg1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream version 2.0.2+dfsg1.
+  * Bump Build-Depends to libsdl2-dev (>= 2.0.7) as per configure.in
+    requirements.
+  * Remove bug-715461-soundfont_paths.patch, applied upstream.
+  * Bump SHLIBVER to 2.0.2 as INTERFACE_AGE has been reset in configure.in.
+  * Call aclocal before dh_autoreconf to fix FTBFS.
+  * Move the dbgsym-migration parameter to the dh_strip call.
+  * Add support for the fluidr3mono-gm-soundfont package:
+    + Add fluidr3mono-gm-soundfont to the list of alternative recommends.
+    + Add Breaks: libfluidsynth1 (<< 1.1.7~) to make sure we have a
+      version of that library available that supports the SF3 soundfont
+      format.
+    + Add the soundfont file to the MIX_INIT_SOUNDFONT_PATHS macro.
+
+ -- Fabian Greffrath <fabian@debian.org>  Thu, 09 Nov 2017 17:00:37 +0100
+
+libsdl2-mixer (2.0.1+dfsg1-3) unstable; urgency=medium
+
+  * Update Recommends musescore-soundfont-gm -> timgm6mb-soundfont, thanks
+    Thorsten Glaser (Closes: #870793)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 05 Aug 2017 13:48:50 +0200
+
+libsdl2-mixer (2.0.1+dfsg1-2) unstable; urgency=medium
+
+  * Bump Policy Standards-Version to 4.0.0 (no changes needed)
+  * Switch to debhelper compat level v10
+    - dh flags --parallel are not needed
+    - autoreconf is invoked by default
+      * disable autoheader (invoked automatically by autoreconf),
+        necessary in order to use debhelper compat level v10 without
+        overriding dh-autoreconf calls
+  * Use automatic dbgsym packages, drop -dbg
+  * Update Vcs-* URLs
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 29 Jul 2017 23:18:31 +0200
+
+libsdl2-mixer (2.0.1+dfsg1-1) unstable; urgency=medium
+
+  * New upstream release
+  * d/examples/Makefile: link against SDL2_mixer.  Thanks Riku Saikkonen.
+    (Closes: #774717)
+  * d/patches:
+    - Remove fix-750706-upstream-8ef083375857.patch, backported from upstream
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Tue, 26 Jan 2016 16:54:51 +0000
+
+libsdl2-mixer (2.0.0+dfsg1-5) unstable; urgency=medium
+
+  * Add patch fix-750706-upstream-8ef083375857.patch backported from
+    upstream to fix playing speed with timidity backend.  Thanks Sylvain
+    Beucler (Closes: #750706)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 25 Oct 2014 11:07:28 +0100
+
+libsdl2-mixer (2.0.0+dfsg1-4) unstable; urgency=medium
+
+  * Bump Policy Standards-Version to 3.9.6 (no changes needed)
+  * Copy patch bug-715461-soundfont_paths.patch from sdl-mixer1.2 to use
+    better quality sounds than those of freepats.  Thanks Fabian Greffrath
+    (Closes: #766019)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 25 Oct 2014 00:45:21 +0100
+
+libsdl2-mixer (2.0.0+dfsg1-3) unstable; urgency=low
+
+  * Bump Policy Standards-Version to 3.9.5 (no changes needed)
+  * Do not call dh_autoreconf with autogen.sh as parameter, and use
+    instead other methods to force the update of ltmain.sh and
+    config.{sub,guess} files, needed when having new architectures such as
+    arm64 (Closes: #727435)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sun, 09 Mar 2014 11:24:29 +0000
+
+libsdl2-mixer (2.0.0+dfsg1-2) unstable; urgency=low
+
+  * Issue extra -I/usr/include/libmodplug during compilation to avoid a
+    FTBFS due to recent changes in libmodplug (Closes: #725564)
+  * Build-Depends on pkg-config
+  * Clean-up of debian/rules
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 19 Oct 2013 16:30:18 +0100
+
+libsdl2-mixer (2.0.0+dfsg1-1) unstable; urgency=low
+
+  * New upstream release
+  * Filter upstream tarball from binaries and unneeded cruft
+    - Remove from debian/copyright files that are now filtered out when creating
+      the orig.tar
+  * Remove patches carried from version sdl-mixer1.2, all of them were applied
+    upstream (4) or had been backported (1)
+  * Recommend MIDI patch set "freepats"
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Tue, 13 Aug 2013 20:03:24 +0100
+
+libsdl2-mixer (2.0.0~rc1-1) unstable; urgency=low
+
+  * Initial release. (Closes: #711570)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Sat, 08 Jun 2013 01:16:42 +0100

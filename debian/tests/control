@@ -1,0 +1,9 @@
+Tests: libsdl2-mixer-dev
+Restrictions: allow-stderr, superficial
+Depends:
+ alsa-utils,
+ build-essential,
+ libsdl2-mixer-dev,
+ pkg-config,
+ xauth,
+ xvfb,
