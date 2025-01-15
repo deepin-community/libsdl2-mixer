@@ -28,17 +28,36 @@ fi
 
 cp playmus.c "$WORKDIR"
 cp playwave.c "$WORKDIR"
+mkdir "$WORKDIR/cmake"
+cp ./cmake/test/CMakeLists.txt "$WORKDIR/cmake"
+cp ./cmake/test/main.c "$WORKDIR/cmake"
+mkdir "$WORKDIR/cmake-pkg-config"
+cp cmake/test/main.c "$WORKDIR/cmake-pkg-config"
+cp debian/tests/cmake-pkg-config/CMakeLists.txt "$WORKDIR/cmake-pkg-config"
 
 cd "$WORKDIR"
 
 # Deliberately word-splitting pkg-config's output:
 # shellcheck disable=SC2046
-"${CROSS_COMPILE}gcc" -oplaymus playmus.c $("${CROSS_COMPILE}pkg-config" --cflags --libs SDL2_mixer)
+"${CROSS_COMPILE}gcc" -oplaymus playmus.c $("${CROSS_COMPILE}pkg-config" --cflags --libs 'SDL2_mixer >= 2.6.0')
 # shellcheck disable=SC2046
-"${CROSS_COMPILE}gcc" -oplaywave playwave.c $("${CROSS_COMPILE}pkg-config" --cflags --libs SDL2_mixer)
+"${CROSS_COMPILE}gcc" -oplaywave playwave.c $("${CROSS_COMPILE}pkg-config" --cflags --libs 'SDL2_mixer >= 2.6.0')
 
-set -- xvfb-run -a
+set -- xvfb-run -a -s '-screen 0 1280x1024x24 -noreset'
 
 # This audio file is shipped in the alsa-utils package
 "$@" ./playmus /usr/share/sounds/alsa/Front_Center.wav
 "$@" ./playwave /usr/share/sounds/alsa/Front_Center.wav
+
+if [ -z "${DEB_HOST_GNU_TYPE:-}" ]; then
+    mkdir cmake/_build
+    ( cd cmake/_build; cmake -GNinja -DTEST_SHARED=ON -DTEST_STATIC=ON .. )
+    ninja -C cmake/_build
+    ./cmake/_build/main_shared
+    ./cmake/_build/main_static
+
+    mkdir cmake-pkg-config/_build
+    ( cd cmake-pkg-config/_build; cmake .. )
+    make -C cmake-pkg-config/_build
+    ./cmake-pkg-config/_build/main
+fi

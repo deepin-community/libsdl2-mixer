@@ -3,7 +3,9 @@ Restrictions: allow-stderr, superficial
 Depends:
  alsa-utils,
  build-essential,
+ cmake,
  libsdl2-mixer-dev,
+ ninja-build,
  pkg-config,
  xauth,
  xvfb,
