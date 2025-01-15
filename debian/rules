@@ -5,13 +5,13 @@
 # fix for #725564
 MODPLUG_INCLUDE_DIR := -I/usr/include/libmodplug
 
+export DEB_BUILD_MAINT_OPTIONS := hardening=+all
+
 export DEB_CFLAGS_MAINT_APPEND  := -pipe -Wall $(MODPLUG_INCLUDE_DIR)
 # bug #715461, provide default soundfont paths
-export DEB_CPPFLAGS_MAINT_APPEND := -DMIX_INIT_SOUNDFONT_PATHS=\"/usr/share/sounds/sf3/default-GM.sf3\"
+export DEB_CPPFLAGS_MAINT_APPEND := -DMIX_INIT_SOUNDFONT_PATHS="\"/usr/share/sounds/sf3/default-GM.sf3\""
 
 include /usr/share/dpkg/architecture.mk
-
-SHLIBVER := 2.0.2
 
 
 # disable autoheader (invoked automatically by autoreconf), necessary in order
@@ -32,7 +32,11 @@ export ACLOCAL := aclocal --force --install -I /usr/share/aclocal/ -I acinclude
 confflags := --enable-music-cmd
 # flac
 confflags += --enable-music-flac
-confflags += --disable-music-flac-shared
+confflags += --enable-music-flac-libflac
+confflags += --disable-music-flac-libflac-shared
+confflags += --disable-music-flac-drflac
+# game music emulation: disabled until someone needs it
+confflags += --disable-music-gme
 # MIDI
 confflags += --enable-music-midi-fluidsynth
 confflags += --disable-music-midi-fluidsynth-shared
@@ -43,17 +47,28 @@ confflags += --enable-music-mod
 confflags += --enable-music-mod-modplug
 confflags += --disable-music-mod-mikmod
 confflags += --disable-music-mod-modplug-shared
+confflags += --disable-music-mod-xmp
+# MP3
 confflags += --enable-music-mp3
 confflags += --enable-music-mp3-mpg123
 confflags += --disable-music-mp3-mpg123-shared
+confflags += --disable-music-mp3-mad-gpl
+confflags += --disable-music-mp3-minimp3
 # ogg
 confflags += --enable-music-ogg
-confflags += --disable-music-ogg-shared
+confflags += --enable-music-ogg-vorbis
+confflags += --disable-music-ogg-vorbis-shared
+confflags += --disable-music-ogg-tremor
+confflags += --disable-music-ogg-stb
 # opus
 confflags += --enable-music-opus
 confflags += --disable-music-opus-shared
 # wav
 confflags += --enable-music-wave
+# WavPack: disabled until someone needs it
+confflags += --disable-music-wavpack
+confflags += --disable-music-wavpack-dsd
+confflags += --disable-music-wavpack-shared
 
 
 %:
@@ -69,9 +84,6 @@ override_dh_autoreconf:
 override_dh_installchangelogs:
 	dh_installchangelogs -- CHANGES.txt
 
-override_dh_missing:
-	dh_missing --fail-missing
-
 override_dh_link:
 	# fix lintian warning dev-pkg-without-shlib-symlink
 	dh_link -plibsdl2-mixer-dev usr/lib/$(DEB_HOST_MULTIARCH)/libSDL2_mixer-2.0.so.0 usr/lib/$(DEB_HOST_MULTIARCH)/libSDL2_mixer-2.0.so
@@ -79,9 +91,3 @@ override_dh_link:
 
 override_dh_compress:
 	dh_compress -Xplaymus.c -Xplaywave.c
-
-override_dh_makeshlibs:
-	dh_makeshlibs -V"libsdl2-mixer-2.0-0 (>= $(SHLIBVER))"
-
-override_dh_strip:
-	dh_strip --dbgsym-migration=libsdl2-mixer-dbg

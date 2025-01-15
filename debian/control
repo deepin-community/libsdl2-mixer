@@ -2,19 +2,19 @@ Source: libsdl2-mixer
 Section: libs
 Priority: optional
 Maintainer: Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>
-Uploaders: Manuel A. Fernandez Montecelo <mafm@debian.org>
-Standards-Version: 4.2.1
+Uploaders: Manuel A. Fernandez Montecelo <mafm@debian.org>, Simon McVittie <smcv@debian.org>
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
-Build-Depends: debhelper-compat (= 12),
-               libflac-dev (>= 1.2.1),
-               libfluidsynth-dev (>= 1.1.1),
-               libmodplug-dev (>= 1:0.8.8),
+Build-Depends: debhelper-compat (= 13),
+               libflac-dev,
+               libfluidsynth-dev,
+               libmodplug-dev,
                libmpg123-dev,
-               libogg-dev (>= 1.2.0),
+               libogg-dev,
                libopusfile-dev,
-               libsdl2-dev (>= 2.0.7),
+               libsdl2-dev,
                libtool,
-               libvorbis-dev (>= 1.2.0),
+               libvorbis-dev,
                pkg-config
 Homepage: https://www.libsdl.org/projects/SDL_mixer/
 Vcs-Browser: https://salsa.debian.org/sdl-team/libsdl2-mixer
@@ -27,8 +27,7 @@ Multi-Arch: same
 Pre-Depends: ${misc:Pre-Depends}
 Depends: ${shlibs:Depends},
          ${misc:Depends}
-Recommends: timgm6mb-soundfont (>= 1.3-3~) | sf3-soundfont-gm
-Breaks: libfluidsynth1 (<< 1.1.7~)
+Recommends: timgm6mb-soundfont | sf3-soundfont-gm
 Description: Mixer library for Simple DirectMedia Layer 2, libraries
  SDL_mixer is a sample multi-channel audio mixer library.  It supports any
  number of simultaneously playing channels of 16 bit stereo audio, plus a single
@@ -42,8 +41,15 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends: ${misc:Depends},
+         libflac-dev,
+         libfluidsynth-dev,
+         libmodplug-dev,
+         libmpg123-dev,
+         libogg-dev,
+         libopusfile-dev,
+         libsdl2-dev,
          libsdl2-mixer-2.0-0 (= ${binary:Version}),
-         libsdl2-dev (>= 2.0.7)
+         libvorbis-dev,
 Description: Mixer library for Simple DirectMedia Layer 2, development files
  SDL_mixer is a sample multi-channel audio mixer library.  It supports any
  number of simultaneously playing channels of 16 bit stereo audio, plus a single

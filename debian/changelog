@@ -1,8 +1,196 @@
-libsdl2-mixer (2.0.4+dfsg1-4) UNRELEASED; urgency=medium
+libsdl2-mixer (2.8.0+dfsg-1) unstable; urgency=medium
 
-  * update
+  * New upstream stable release
+  * d/copyright: Exclude vendored minimp3.
+    We don't use this in Debian, so there's little value in reviewing new
+    versions or tracking their copyright status in d/copyright.
+  * d/copyright: Update
+  * d/libsdl2-mixer-2.0-0.symbols: Update
+  * d/rules: Update build options to enable/disable codecs.
+    GME (game music emulation) and WavPack are disabled for now,
+    to minimize dependencies and security exposure. Enabling them in
+    future would be a compatible change, if a game in Debian needs them,
+    but disabling them after they were enabled would be an incompatible
+    change, so the conservative approach is to start small.
+  * d/clean: Fix FTBFS-twice-in-a-row by removing regenerated files
+    (Closes: #1046994)
+  * d/gbp.conf: Only sign packaging tags, not upstream tags
+  * d/gbp.conf: Rely on uscan to repack upstream source.
+    This will use Files-Excluded in d/copyright, rather than separate
+    configuration.
+  * d/gbp.conf: Use DEP-14 branch names
 
- -- Debian SDL packages maintainers <pkg-sdl-maintainers@lists.alioth.debian.org>  Thu, 19 May 2022 10:25:21 +0800
+ -- Simon McVittie <smcv@debian.org>  Mon, 22 Jan 2024 13:12:35 +0000
+
+libsdl2-mixer (2.6.3+dfsg-1) unstable; urgency=medium
+
+  [ Debian Janitor ]
+  * d/control: Remove version constraints unnecessary since Debian 10
+  * d/upstream/metadata: Add
+
+  [ Simon McVittie ]
+  * New upstream stable release
+    - Functionally equivalent to 2.6.2+dfsg-2
+    - Drop patch from 2.6.2+dfsg-2, applied upstream
+  * d/copyright: Update
+  * d/control: Update standards version to 4.6.2 (no changes needed)
+  * d/control: Remove version constraints unnecessary since Debian 11
+  * d/upstream/metadata: Add Repository field
+  * d/tests: Run Xvfb with -noreset to make the test more reliable.
+    See #981201.
+  * d/tests: Instruct xvfb-run to choose a server number automatically
+  * d/watch: Only watch for 2.x versions.
+    The upstream 'main' branch now targets SDL 3 (under development), and
+    should be packaged separately as a libsdl3-mixer source package.
+
+ -- Simon McVittie <smcv@debian.org>  Sat, 15 Jul 2023 18:05:33 +0100
+
+libsdl2-mixer (2.6.2+dfsg-2) unstable; urgency=medium
+
+  * d/watch: Update for Github website changes
+  * d/p/music_opus.c-Fixed-the-memory-leak-after-tags.patch:
+    Add minor memory leak fix from upstream release-2.6.x branch
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 28 Oct 2022 18:13:41 +0100
+
+libsdl2-mixer (2.6.2+dfsg-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 29 Aug 2022 21:05:51 +0100
+
+libsdl2-mixer (2.6.1+dfsg-1) unstable; urgency=medium
+
+  * New upstream release, functionally equivalent to 2.6.0+dfsg-2
+    - d/p/configure.ac-Make-sure-to-set-VERSION.patch:
+      Drop, applied upstream
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 18 Jul 2022 14:25:38 +0100
+
+libsdl2-mixer (2.6.0+dfsg-2) unstable; urgency=medium
+
+  * d/p/configure.ac-Make-sure-to-set-VERSION.patch:
+    Add patch to ensure that Version is set in the .pc file.
+    This resolves FTBFS in dependent packages like wesnoth-1.16.
+  * d/tests: Verify that the pkg-config metadata has a suitable
+    version number
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 12 Jul 2022 12:29:17 +0100
+
+libsdl2-mixer (2.6.0+dfsg-1) unstable; urgency=medium
+
+  * New upstream release
+  * d/libsdl2-mixer-2.0-0.symbols: Update
+  * d/libsdl2-mixer-2.0-0.symbols: Use stable release for new symbols.
+    We don't need to keep track of which specific prerelease introduced
+    each symbol now that there's a stable release.
+  * d/watch: Only look for stable releases
+  * d/rules: Enable full compiler hardening
+  * Switch branch for upload to unstable
+
+ -- Simon McVittie <smcv@debian.org>  Sat, 09 Jul 2022 14:55:01 +0100
+
+libsdl2-mixer (2.5.2+dfsg-1) experimental; urgency=medium
+
+  * New upstream prerelease
+  * d/watch: Don't download Windows binaries, etc.
+  * d/watch: Accept prereleases for experimental branch
+  * Add myself to Uploaders
+  * Drop all patches, included in the new upstream prerelease
+  * d/libsdl2-mixer-dev.install: Install the new CMake metadata
+  * d/tests: Exercise a CMake build
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 17 Jun 2022 10:56:20 +0100
+
+libsdl2-mixer (2.5.1+dfsg-2) experimental; urgency=medium
+
+  * d/patches: Add post-release-candidate fixes from upstream
+  * Standards-Version: 4.6.1 (no changes required)
+  * d/.gitignore: Add
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 31 May 2022 14:39:47 +0100
+
+libsdl2-mixer (2.5.1+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream prerelease
+  * d/watch: Download new releases from Github
+  * d/watch: Don't download prereleases by default
+  * d/copyright: Remove exclusion patterns that are no longer needed
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 26 May 2022 12:40:57 +0100
+
+libsdl2-mixer (2.5.0~git20220523+g8805ff3+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream git snapshot
+  * d/copyright: Update
+  * d/rules: Update configure options
+  * d/libsdl2-mixer-2.0-0.symbols: Update
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 24 May 2022 18:12:01 +0100
+
+libsdl2-mixer (2.5.0~git20220512.g4366e74+dfsg-1-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream git snapshot
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 16 May 2022 14:23:53 +0100
+
+libsdl2-mixer (2.5.0~git20220509.g5c43733+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream git snapshot
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 09 May 2022 14:11:57 +0100
+
+libsdl2-mixer (2.0.5~20220126.g6845d9f+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream snapshot
+  * Add -dev dependencies mentioned in .pc file
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 02 Mar 2022 20:39:57 +0000
+
+libsdl2-mixer (2.0.5~20220103.g3f5a050+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * New upstream snapshot
+  * d/copyright: Update
+  * d/rules: Don't explicitly specify SHLIBVER.
+    Specifying a version for dh_makeshlibs, and remembering to increment it
+    every time new ABI is added, is error-prone. In debhelper compat level
+    12 and up, the default is to generate a conservative dependency using
+    dh_makeshlibs -VUpstream-Version. The symbols file (which is more
+    precise) also takes precedence over the shlibs version.
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 07 Jan 2022 14:14:05 +0000
+
+libsdl2-mixer (2.0.5~20211214.gffd0589+dfsg-1) experimental; urgency=medium
+
+  * Team upload
+  * Branch for experimental
+  * New upstream snapshot
+    - Drop patches, applied upstream
+    - d/copyright: Update
+  * Add a .symbols file
+  * d/copyright, d/gbp.conf: Filter more generated/vendored files.
+    If we're repacking the tarball *anyway*, we might as well exclude these
+    too. They'll be restored by dh_autoreconf.
+  * Escape CPPFLAGS properly, so -fvisibility=hidden gets enabled.
+    We had the wrong number of layers of escaping here, resulting in a
+    compiler warning which indirectly disabled detection of
+    -fvisibility=hidden.
+  * Bump debhelper compat level from 12 to 13
+    + debian/rules: Drop --fail-missing argument to dh_missing, which is
+      now the default.
+  * Re-export upstream signing key without extra signatures.
+  * Drop transition for old debug package migration.
+    The legacy -dbg package was replaced by -dbgsym in Debian 10, and we
+    don't support skipping a release when upgrading.
+  * Standards-Version: 4.6.0 (no changes required)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 14 Dec 2021 20:36:45 +0000
 
 libsdl2-mixer (2.0.4+dfsg1-4) unstable; urgency=medium
 
